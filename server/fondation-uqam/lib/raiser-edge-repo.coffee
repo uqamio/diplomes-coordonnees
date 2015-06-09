@@ -24,7 +24,7 @@ exports.getCoordonnees = (callback) ->
 exports.ajouterCoordonnees = (coordonnees, callback) ->
   oracle.connect connectData,
     (err, connection) ->
-      connection.execute "INSERT INTO FOND_MAJ_WEB (NOM, PRENOM, CODE_PERMANENT, DATE_NAISSANCE, SEXE, CARTE_PRIVILEGE, NO_CIVIQUE_RES, RUE_RES, APPARTEMENT_RES, VILLE_RES, CODE_POSTAL_RES, CASE_POSTAL_RES, CODE_PROVINCE_RES, CODE_PAYS_RES, TELEPHONE_RES, COURRIEL_RES, COMPAGNIE, NO_CIVIQUE_CIE, RUE_CIE, VILLE_CIE, CODE_POSTAL_CIE, CASE_POSTAL_CIE, CODE_PROVINCE_CIE, CODE_PAYS_CIE, TELEPHONE_CIE, POSTE_CIE, COURRIEL_CIE, MAJ_WEB_SEQUENCE) VALUES(:NOM, :PRENOM, :CODE_PERMANENT, TO_DATE ( SUBSTR ( :DATE_NAISSANCE, 0, 10), 'DD-MM-YYYY'), :SEXE, :CARTE_PRIVILEGE, :NO_CIVIQUE_RES, :APPARTEMENT_RES, :RUE_RES, :VILLE_RES, :CODE_POSTAL_RES, :CASE_POSTAL_RES, :CODE_PROVINCE_RES, :CODE_PAYS_RES, :TELEPHONE_RES, :COURRIEL_RES, :COMPAGNIE, :NO_CIVIQUE_CIE, :RUE_CIE, :VILLE_CIE, :CODE_POSTAL_CIE, : CASE_POSTAL_CIE, :CODE_PROVINCE_CIE, :CODE_PAYS_CIE, :TELEPHONE_CIE, :POSTE_CIE, :COURRIEL_CIE, FOND_MAJ_WEB_SEQUENCE_SEQ.NEXTVAL)",
+      connection.execute "INSERT INTO FOND_MAJ_WEB (NOM, PRENOM, CODE_PERMANENT, DATE_NAISSANCE, SEXE, CARTE_PRIVILEGE, NO_CIVIQUE_RES, RUE_RES, APPARTEMENT_RES, VILLE_RES, CODE_POSTAL_RES, CASE_POSTAL_RES, CODE_PROVINCE_RES, CODE_PAYS_RES, TELEPHONE_RES, COURRIEL_RES, COMPAGNIE, TITRE_FONCTION_CIE, NO_CIVIQUE_CIE, RUE_CIE, VILLE_CIE, CODE_POSTAL_CIE, CASE_POSTAL_CIE, CODE_PROVINCE_CIE, CODE_PAYS_CIE, TELEPHONE_CIE, POSTE_CIE, COURRIEL_CIE, SITE_WEB_CIE, MAJ_WEB_SEQUENCE) VALUES(:NOM, :PRENOM, :CODE_PERMANENT, TO_DATE ( SUBSTR ( :DATE_NAISSANCE, 0, 10), 'DD-MM-YYYY'), :SEXE, :CARTE_PRIVILEGE, :NO_CIVIQUE_RES, :APPARTEMENT_RES, :RUE_RES, :VILLE_RES, :CODE_POSTAL_RES, :CASE_POSTAL_RES, :CODE_PROVINCE_RES, :CODE_PAYS_RES, :TELEPHONE_RES, :COURRIEL_RES, :COMPAGNIE, :TITRE_FONCTION_CIE, :NO_CIVIQUE_CIE, :RUE_CIE, :VILLE_CIE, :CODE_POSTAL_CIE, : CASE_POSTAL_CIE, :CODE_PROVINCE_CIE, :CODE_PAYS_CIE, :TELEPHONE_CIE, :POSTE_CIE, :COURRIEL_CIE, :SITE_WEB_CIE, FOND_MAJ_WEB_SEQUENCE_SEQ.NEXTVAL)",
         [
           coordonnees.nom,
           coordonnees.prenom,
@@ -37,12 +37,13 @@ exports.ajouterCoordonnees = (coordonnees, callback) ->
           coordonnees.residence.appartement,
           coordonnees.residence.ville,
           coordonnees.residence.codePostal,
-          coordonnees.residence.casePostal,
+          coordonnees.residence.casePostale,
           coordonnees.residence.province,
           coordonnees.residence.pays,
           coordonnees.residence.telephone,
           coordonnees.residence.courriel,
           coordonnees.travail.nom,
+          coordonnees.travail.titre,
           coordonnees.travail.no,
           coordonnees.travail.rue,
           coordonnees.travail.ville,
@@ -52,7 +53,8 @@ exports.ajouterCoordonnees = (coordonnees, callback) ->
           coordonnees.travail.pays,
           coordonnees.travail.telephone,
           coordonnees.travail.poste,
-          coordonnees.travail.courriel
+          coordonnees.travail.courriel,
+          coordonnees.travail.siteWeb
         ],
         {isAutoCommit: true},
         (err, results) ->
