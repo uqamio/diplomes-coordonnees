@@ -36,4 +36,3 @@ server/logs/*.log
 instantclient
 dist
 server/fondation/uqam-validator
-grunt/env.coffee

@@ -83,4 +83,3 @@ dist
 .sass-cache
 client/bower_components
 server/fondation/uqam-validator
-grunt/env.coffee
