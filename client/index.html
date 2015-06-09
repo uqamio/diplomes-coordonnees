@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html ng-app="baseApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/">
+    <title>UQAM | Fondation UQAM | Modifier mes informations personnelles</title>
+
+    <meta name='viewport' id="viewPort" name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- bower:css -->
+    <!-- endbower -->
+
+    <!-- injector:css -->
+    <!-- endinjector -->
+
+</head>
+
+<body>
+
+
+<nav class="top-bar" data-topbar>
+    <ul class="title-area">
+        <li class="name">
+            <h1>
+                <a href="/#/">
+                    UQAM | Fondation </a>
+
+            </h1>
+        </li>
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="/#/"><span></span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+            <span class="left">
+                 | Modifier mes coordonnées
+            </span>
+    </section>
+</nav>
+<div ng-controller="AccueilController" ng-cloak>
+    <div class="row">
+
+        <div class="pop-up" ng-show="showCoords">
+            <div>
+                <button class="radius" ng-click="showCoords=false">X</button>
+            </div>
+            <pre ng-repeat="ficheDiplome in ficheDiplomes">
+                <a ng-click="supprimer(ficheDiplome.MAJ_WEB_SEQUENCE)">Delete : {{ficheDiplome.PRENOM}} {{ficheDiplome.NOM}}</a>
+                {{ficheDiplome | json}}
+            </pre>
+        </div>
+
+        <div class="small-12 small-centered large-6 large-centered columns">
+
+            <h1 class="majuscule">Mise à jour de mes coordonnées</h1>
+
+            <h2>Informations personnelles</h2>
+
+            <button class="radius" type="button" ng-click="getFicheDiplomes()">Show coords</button>
+
+
+            <div class="row">
+                <div class="small-12 columns">
+                    <small>Veuillez saosir votre nom et prénom complets</small>
+                </div>
+                <div class="small-6 columns">
+                    <label>
+                        Nom
+                        <small>*</small>
+                        <input type="text"
+                               ng-class="{error: regleInvalidees.nom}"
+                               placeholder="Nom à la naissance"
+                               ng-model="ficheDiplome.nom">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.nom">
+                            {{regleInvalidees.nom}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 columns">
+                    <label>
+                        Prénom
+                        <small>*</small>
+                        <input type="text"
+                               ng-class="{error: regleInvalidees.prenom}"
+                               placeholder="Prénom à la naissance"
+                               ng-model="ficheDiplome.prenom">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.prenom">
+                            {{regleInvalidees.prenom}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Code permanent
+                        <small>*</small>
+                        <input type="text"
+                               ng-class="{error: regleInvalidees.codePermanent}"
+                               placeholder="Ex.: ABCD12345678"
+                               ng-model="ficheDiplome.codePermanent">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.codePermanent">
+                            {{regleInvalidees.codePermanent}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 columns">
+                    <label>
+                        Date de naissance
+                        <input type="text"
+                               ng-class="{error: regleInvalidees.dateNaissance}"
+                               placeholder="jj-mm-yyyy Ex.: 03-10-1979"
+                               ng-model="ficheDiplome.dateNaissance">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.dateNaissance">
+                            {{regleInvalidees.dateNaissance}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="medium-3 columns">
+                    <label>
+                        Sexe
+                        <select ng-class="{error: regleInvalidees.sexe}"
+                                ng-model="ficheDiplome.sexe">
+                            <option value="F">Femme</option>
+                            <option value="M">Homme</option>
+                        </select>
+                        <small id="sexeInvalide" class="error ng-hide" ng-show="regleInvalidees.sexe">
+                            {{regleInvalidees.sexe}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <h2>Coordonnées résidentielles</h2>
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Province
+                        <select ng-class="{error: regleInvalidees.provinceResidence}"
+                                ng-model="ficheDiplome.residence.province">
+                            <option value="Qc">Québec</option>
+                            <option value="On">Ontario</option>
+                            <option value="atr">Autre</option>
+                        </select>
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.provinceResidence">
+                            {{regleInvalidees.provinceResidence}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 columns">
+                    <label>
+                        Pays
+                        <select ng-class="{error: regleInvalidees.paysResidence}"
+                                ng-model="ficheDiplome.residence.pays">
+                            <option value="Canada">Canada</option>
+                            <option value="USA">USA</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                        <small id="payResidenceInvalide"
+                               class="error ng-hide"
+                               ng-show="regleInvalidees.paysResidence">
+                            {{regleInvalidees.paysResidence}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-12 medium-3 columns">
+                    <label>
+                        Numéro
+                        <input type="text"
+                               ng-class="{error: regleInvalidees.noResidence}"
+                               placeholder="Numéro"
+                               ng-model="ficheDiplome.residence.no">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.noResidence">
+                            {{regleInvalidees.noResidence}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-12 medium-6 columns">
+                    <label>
+                        Rue
+                        <input type="text"
+                               ng-class="{error: regleInvalidees.rueResidence}"
+                               placeholder="Nom"
+                               ng-model="ficheDiplome.residence.rue">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.rueResidence">
+                            {{regleInvalidees.rueResidence}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-12 medium-3 columns end">
+                    <label>
+                        Appartement
+                        <input type="text"
+                               ng-class="{error: regleInvalidees.appartementResidence}"
+                               placeholder="Numéro"
+                               ng-model="ficheDiplome.residence.appartement">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.appartementResidence">{{regleInvalidees.appartementResidence}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-12 medium-6 columns">
+                    <label>
+                        Ville
+                        <input type="text"
+                               placeholder="Nom"
+                               ng-class="{error: regleInvalidees.villeResidence}"
+                               ng-model="ficheDiplome.residence.ville">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.villeResidence">
+                            {{regleInvalidees.villeResidence}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 medium-3 columns">
+                    <label>
+                        Code postal
+                        <input type="text"
+                               placeholder="Ex.: H2L 2C4"
+                               ng-class="{error: regleInvalidees.codePostalResidence}"
+                               ng-model="ficheDiplome.residence.codePostal">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.codePostalResidence">
+                            {{regleInvalidees.codePostalResidence}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 medium-3 columns">
+                    <label>
+                        Case postale
+                        <input type="text"
+                               placeholder="Numéro"
+                               ng-class="{error: regleInvalidees.casePostalResidence}"
+                               ng-model="ficheDiplome.residence.casePostal">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.casePostalResidence">
+                            {{regleInvalidees.casePostalResidence}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Téléphone
+                        <input type="text"
+                               placeholder="(555)555-5555"
+                               ng-class="{error: regleInvalidees.telephoneResidence}"
+                               ng-model="ficheDiplome.residence.telephone">
+                        <small id="telephoneResidenceInvalide"
+                               class="error ng-hide"
+                               ng-show="regleInvalidees.telephoneResidence">
+                            {{regleInvalidees.telephoneResidence}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Courriel
+                        <input type="text"
+                               placeholder="Adresse courriel"
+                               ng-class="{error: regleInvalidees.courrielResidence}"
+                               ng-model="ficheDiplome.residence.courriel">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.courrielResidence">
+                            {{regleInvalidees.courrielResidence}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 columns">
+                    <label>
+                        Confirmer le courriel
+                        <input type="text"
+                               placeholder="Confirmer l'adresse courriel"
+                               ng-paste="$event.preventDefault()">
+                        <small class="error ng-hide">
+                            {{regleInvalidees.courrielResidence}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <h2>Coordonnées professionnelles</h2>
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Nom
+                        <input type="text"
+                               placeholder="Votre compagnie"
+                               ng-class="{error: regleInvalidees.nomTravail}"
+                               ng-model="ficheDiplome.travail.nom">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.nomTravail">
+                            {{regleInvalidees.nomTravail}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Province
+                        <select ng-class="{error: regleInvalidees.provinceTravail}"
+                                ng-model="ficheDiplome.travail.province">
+                            <option value="Qc">Québec</option>
+                            <option value="On">Ontario</option>
+                            <option value="atr">Autre</option>
+                        </select>
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.provinceTravail">
+                            {{regleInvalidees.provinceTravail}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 columns">
+                    <label>
+                        Pays
+                        <select ng-class="{error: regleInvalidees.paysTravail}"
+                                ng-model="ficheDiplome.travail.pays">
+                            <option value="Canada">Canada</option>
+                            <option value="USA">USA</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.paysTravail">
+                            {{regleInvalidees.paysTravail}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="medium-3 columns">
+                    <label>
+                        Numéro
+                        <input type="text"
+                               placeholder="Numéro"
+                               ng-class="{error: regleInvalidees.noTravail}"
+                               ng-model="ficheDiplome.travail.no">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.noTravail">
+                            {{regleInvalidees.noTravail}}
+                        </small>
+                    </label>
+                </div>
+                <div class="medium-9 columns">
+                    <label>
+                        Rue
+                        <input type="text"
+                               placeholder="Nom"
+                               ng-class="{error: regleInvalidees.rueTravail}"
+                               ng-model="ficheDiplome.travail.rue">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.rueTravail">
+                            {{regleInvalidees.rueTravail}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Ville
+                        <input type="text"
+                               placeholder="Nom"
+                               ng-class="{error: regleInvalidees.villeTravail}"
+                               ng-model="ficheDiplome.travail.ville">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.villeTravail">
+                            {{regleInvalidees.villeTravail}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 medium-3 columns">
+                    <label>
+                        Code postal
+                        <input type="text"
+                               placeholder="Ex.: H2L 2C4"
+                               ng-class="{error: regleInvalidees.codePostalTravail}"
+                               ng-model="ficheDiplome.travail.codePostal">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.codePostalTravail">
+                            {{regleInvalidees.codePostalTravail}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 medium-3 columns">
+                    <label>
+                        Case postale
+                        <input type="text"
+                               placeholder="Numéro"
+                               ng-class="{error: regleInvalidees.casePostaleTravail}"
+                               ng-model="ficheDiplome.travail.casePostale">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.casePostaleTravail">
+                            {{regleInvalidees.casePostaleTravail}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Téléphone
+                        <input type="text"
+                               placeholder="(555)555-5555"
+                               ng-class="{error: regleInvalidees.telephoneTravail}"
+                               ng-model="ficheDiplome.travail.telephone">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.telephoneTravail">
+                            {{regleInvalidees.telephoneTravail}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 columns">
+                    <label>
+                        Poste
+                        <input type="text"
+                               placeholder="Numéro"
+                               ng-class="{error: regleInvalidees.posteTravail}"
+                               ng-model="ficheDiplome.travail.poste">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.posteTravail">
+                            {{regleInvalidees.posteTravail}}
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-6 columns">
+                    <label>
+                        Courriel
+                        <input type="text"
+                               placeholder="Adresse courriel"
+                               ng-class="{error: regleInvalidees.courrieTravail}"
+                               ng-model="ficheDiplome.travail.courriel">
+                        <small class="error ng-hide"
+                               ng-show="regleInvalidees.courrieTravail">
+                            {{regleInvalidees.courrieTravail}}
+                        </small>
+                    </label>
+                </div>
+                <div class="small-6 columns">
+                    <label>
+                        Confirmer le courriel
+                        <input type="text"
+                               placeholder="Confirmer l'adresse courriel"
+                               ng-paste="$event.preventDefault()">
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-12 columns text-right">
+                    <button type="button" ng-click="soumettre()">Soumettre</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- bower:js -->
+<!-- endbower -->
+
+<!-- injector:js -->
+<!-- endinjector -->
+<script>
+    //Charger livereload seulement en local
+    if (window.location.hostname == 'localhost') {
+        document.write('<script src="http://'
+        + window.location.hostname
+        + ':35729/livereload.js?snipver=1" type="text/javascript"><\/script>');
+    }
+</script>
+</body>
+
+</html>

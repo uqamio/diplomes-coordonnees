@@ -1,0 +1,25 @@
+{
+  "name": "fondation-uqam",
+  "version": "0.1.0",
+  "authors": [
+    "Gabriel Com <com.gabriel@uqam.ca>"
+  ],
+  "description": "Formulaire de modification des informations personnelles",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "client/bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.3.15",
+    "underscore": "~1.8.2",
+    "foundation": "zurb/bower-foundation#~5.5.1",
+    "angular-route": "~1.3.15",
+    "angular-resource": "~1.3.15",
+    "angular-foundation": "~0.6.0"
+  }
+}

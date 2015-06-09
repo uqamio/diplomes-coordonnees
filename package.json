@@ -1,0 +1,74 @@
+{
+  "name": "webapp",
+  "version": "0.1.0",
+  "description": "Application web de base",
+  "main": "dist/app.js",
+  "config": {
+    "blanket": {
+      "pattern": "server",
+      "loader": "./node-loaders/coffee-script",
+      "data-cover-never": "node_modules"
+    }
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "body-parser": "^1.12.x",
+    "bunyan": "^1.3.x",
+    "coffee-script": "^1.9.3",
+    "cookie-parser": "^1.3.x",
+    "express": "^4.12.x",
+    "express-session": "^1.11.x",
+    "grunt-env": "^0.4.x",
+    "iconv": "^2.1.7",
+    "jsend": "^0.1.3",
+    "jsonwebtoken": "^5.0.x",
+    "mongodb": "^2.0.x",
+    "passport": "^0.2.x",
+    "passport-local": "^1.0.x",
+    "passport-saml": "^0.9.x",
+    "request": "^2.55.x",
+    "strong-oracle": "^1.6.1",
+    "uqam-validator": "^0.1.3",
+    "validator": "^3.38.0",
+    "winston": "^1.0.x",
+    "wiredep": "^2.2.x"
+  },
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "chalk": "^1.0.x",
+    "coffee-coverage": "^0.4.5",
+    "grunt": "^0.4.x",
+    "grunt-asset-injector": "^0.1.x",
+    "grunt-concurrent": "^1.0.x",
+    "grunt-contrib-clean": "^0.6.x",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-copy": "^0.8.x",
+    "grunt-contrib-sass": "^0.9.x",
+    "grunt-contrib-watch": "^0.6.x",
+    "grunt-express-server": "^0.5.x",
+    "grunt-jsdoc": "^0.5.x",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-ngdocs": "^0.2.x",
+    "grunt-node-inspector": "^0.1.x",
+    "grunt-open": "^0.2.x",
+    "grunt-wiredep": "^2.0.x",
+    "istanbul": "^0.3.x",
+    "jscoverage": "^0.5.x",
+    "jsdoc": "^3.3.0-beta3",
+    "load-grunt-config": "^0.17.x",
+    "load-grunt-tasks": "^3.1.x",
+    "mocha": "^2.2.x",
+    "should": "^5.2.x",
+    "travis-cov": "^0.2.x"
+  },
+  "scripts": {
+    "test": "node --debug --harmony-generators ./node_modules/.bin/grunt mochaTest:test",
+    "start": "node ./dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/uqamio/webapp.git"
+  },
+  "author": "Gabriel Com",
+  "license": "ISC"
+}

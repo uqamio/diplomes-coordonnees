@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="small-1 columns">
+        &nbsp;
+    </div>
+    <div class="small-10 columns">
+        <h1>Modifier mes coordonnées</h1>
+        <form id="form" novalidate="novalidate" data-abide>
+            <div class="row">
+                <div class="small-3 columns text-right">
+                    <label for="courriel">Courriel</label>
+                </div>
+                <div class="small-9 columns text-left">
+                    <div class="row">
+                        <div class="small-12 email-field">
+                            <input type="email" id="courriel" name="courriel" placeholder="Courriel" required data-invalid/>
+                            <small class="error">Saisir un courriel valide.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12">
+                            <input type="email" id="courrielConfirmer" name="courrielConfirmer"
+                                   placeholder="Confirmer le courriel" onPaste="return false"
+                                   data-equalto="courriel" />
+                            <small class="error">Le courriel doit être le même.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 text-right">
+                    <input type="submit" class="medium button green" value="Go"/>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="small-1 columns">
+        &nbsp;
+    </div>
+</div>
