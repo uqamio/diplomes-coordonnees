@@ -57,7 +57,6 @@ exports.ajouterCoordonnees = (coordonnees, callback) ->
         (err, results) ->
           connection.close()
           if (err)
-            console.warn err
             callback err, err.message
           else
             callback null, results

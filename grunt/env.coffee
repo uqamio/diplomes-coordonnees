@@ -11,6 +11,4 @@ module.exports =
     PROJET_USAGER_CALLBACK_URL: 'http://fondation-uqam.dahriel.io/authentification',
     SAMLISE: false,
     EMETTEUR: 'http://fondation-uqam.dahriel.io',
-    NLS_LANG: '.UTF8',
-    DB_USER_NAME: 'WWW_FOND_MAJ_COORD',
-    DB_PASSWORD: 'WWW_FMC'
+    NLS_LANG: '.UTF8'
