@@ -58,6 +58,10 @@
 
             <h2>Informations personnelles</h2>
 
+            <p>
+                <img class="iconic" data-src="envelope.svg">*****
+            </p>
+
             <button class="radius" type="button" ng-click="getFicheDiplomes()">Show coords</button>
 
 
@@ -164,7 +168,7 @@
                         Pays
                         <select ng-class="{error: regleInvalidees.paysResidence}"
                                 ng-model="ficheDiplome.residence.pays">
-                            <option value="Canada">Canada</option>
+                            <option value="CA">Canada</option>
                             <option value="USA">USA</option>
                             <option value="Autre">Autre</option>
                         </select>
@@ -343,7 +347,7 @@
                         Pays
                         <select ng-class="{error: regleInvalidees.paysTravail}"
                                 ng-model="ficheDiplome.travail.pays">
-                            <option value="Canada">Canada</option>
+                            <option value="CA">Canada</option>
                             <option value="USA">USA</option>
                             <option value="Autre">Autre</option>
                         </select>

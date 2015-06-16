@@ -15,7 +15,8 @@ module.exports = {
         expand: true,
         cwd: '<%= repertoires.client %>assets',
         src: [
-          'images/**/*{.png,.jpg}'
+          'images/**/*{.png,.jpg}',
+          'scripts/**/*.js'
         ],
         dest: '<%= repertoires.distribution %>public/'
       }

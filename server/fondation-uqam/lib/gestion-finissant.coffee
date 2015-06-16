@@ -66,7 +66,7 @@ exports.modifierFicheDiplome = (ficheDiplome, callback) ->
     if not uqamValidator.isLength ficheDiplome.residence.ville, 0, 45
       erreurs.villeResidence = 'Le nom de la ville doit contenir au plus 45 caractères'
 
-    if ficheDiplome.residence.pays is 'Canada' and ficheDiplome.residence.codePostal
+    if ficheDiplome.residence.pays is 'CA' and ficheDiplome.residence.codePostal
       ficheDiplome.residence.codePostal = ficheDiplome.residence.codePostal.toUpperCase()
       if not uqamValidator.isCodePostalCanadien ficheDiplome.residence.codePostal
         erreurs.codePostalResidence = 'Le code postal est invalide'
@@ -80,7 +80,7 @@ exports.modifierFicheDiplome = (ficheDiplome, callback) ->
     if not uqamValidator.isLength ficheDiplome.residence.pays, 0, 30
       erreurs.paysResidence = 'Le pays est invalide'
 
-    if ficheDiplome.residence.telephone and not uqamValidator.isTelephoneNordAmericain ficheDiplome.residence.telephone
+    if ficheDiplome.residence.telephone and ficheDiplome.residence.pays is 'CA' and not uqamValidator.isTelephoneNordAmericain ficheDiplome.residence.telephone
       erreurs.telephoneResidence = 'Le numéro de téléphone est invalide'
 
     if ficheDiplome.residence.courriel and not uqamValidator.isEmail ficheDiplome.residence.courriel
@@ -101,7 +101,7 @@ exports.modifierFicheDiplome = (ficheDiplome, callback) ->
     if not uqamValidator.isLength ficheDiplome.travail.ville, 0, 45
       erreurs.villeTravail = 'La ville du lieu de travail doit contenir au plus 45 caractères'
 
-    if ficheDiplome.travail.pays is 'Canada' and ficheDiplome.travail.codePostal
+    if ficheDiplome.travail.pays is 'CA' and ficheDiplome.travail.codePostal
       ficheDiplome.travail.codePostal = ficheDiplome.travail.codePostal.toUpperCase()
       if not uqamValidator.isCodePostalCanadien ficheDiplome.travail.codePostal
         erreurs.codePostalTravail = 'Le code postal du lieu de travail est invalide'
@@ -115,7 +115,7 @@ exports.modifierFicheDiplome = (ficheDiplome, callback) ->
     if not uqamValidator.isLength ficheDiplome.travail.pays, 0, 30
       erreurs.paysTravail = 'Le pays du lieu de travail est invalide'
 
-    if ficheDiplome.travail.telephone and not uqamValidator.isTelephoneNordAmericain ficheDiplome.travail.telephone
+    if ficheDiplome.travail.telephone and ficheDiplome.travail.pays is 'CA' and not uqamValidator.isTelephoneNordAmericain ficheDiplome.travail.telephone
       erreurs.telephoneTravail = 'Le numéro de téléphone du lieu de travail est invalide'
 
     if not uqamValidator.isLength ficheDiplome.travail.poste, 0, 10
@@ -126,8 +126,6 @@ exports.modifierFicheDiplome = (ficheDiplome, callback) ->
 
     if not uqamValidator.isLength ficheDiplome.travail.compagnie, 0, 40
       erreurs.compagnieTravail = 'Le nom de la compagnie doit contenir au plus 40 caractères'
-
-    console.log erreurs
 
   if Object.keys(erreurs).length > 0
     callback {regleInvalidees: erreurs}

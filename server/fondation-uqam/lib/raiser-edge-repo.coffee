@@ -2,10 +2,12 @@ async = require 'async'
 Iconv  = require('iconv').Iconv
 Buffer = require('buffer').Buffer
 
+console.log process.env
+
 settings = {};
 oracle = require("strong-oracle")(settings);
 
-connectData = {"hostname": "jupiter.si.uqam.ca:1521/OMNID", "user": process.env.DB_USER_NAME, "password": process.env.DB_PASSWORD};
+connectData = {"hostname": process.env.DB_HOSTNAME, "user": process.env.DB_USER_NAME, "password": process.env.DB_PASSWORD};
 
 random = (low, high) ->
   return Math.random() * (high - low) + low;
@@ -24,6 +26,9 @@ exports.getCoordonnees = (callback) ->
 exports.ajouterCoordonnees = (coordonnees, callback) ->
   oracle.connect connectData,
     (err, connection) ->
+
+      #VALIDER Err avant de faire execute
+      console.log coordonnees, err
       connection.execute "INSERT INTO FOND_MAJ_WEB (NOM, PRENOM, CODE_PERMANENT, DATE_NAISSANCE, SEXE, CARTE_PRIVILEGE, NO_CIVIQUE_RES, RUE_RES, APPARTEMENT_RES, VILLE_RES, CODE_POSTAL_RES, CASE_POSTAL_RES, CODE_PROVINCE_RES, CODE_PAYS_RES, TELEPHONE_RES, COURRIEL_RES, COMPAGNIE, TITRE_FONCTION_CIE, NO_CIVIQUE_CIE, RUE_CIE, VILLE_CIE, CODE_POSTAL_CIE, CASE_POSTAL_CIE, CODE_PROVINCE_CIE, CODE_PAYS_CIE, TELEPHONE_CIE, POSTE_CIE, COURRIEL_CIE, SITE_WEB_CIE, MAJ_WEB_SEQUENCE) VALUES(:NOM, :PRENOM, :CODE_PERMANENT, TO_DATE ( SUBSTR ( :DATE_NAISSANCE, 0, 10), 'DD-MM-YYYY'), :SEXE, :CARTE_PRIVILEGE, :NO_CIVIQUE_RES, :APPARTEMENT_RES, :RUE_RES, :VILLE_RES, :CODE_POSTAL_RES, :CASE_POSTAL_RES, :CODE_PROVINCE_RES, :CODE_PAYS_RES, :TELEPHONE_RES, :COURRIEL_RES, :COMPAGNIE, :TITRE_FONCTION_CIE, :NO_CIVIQUE_CIE, :RUE_CIE, :VILLE_CIE, :CODE_POSTAL_CIE, : CASE_POSTAL_CIE, :CODE_PROVINCE_CIE, :CODE_PAYS_CIE, :TELEPHONE_CIE, :POSTE_CIE, :COURRIEL_CIE, :SITE_WEB_CIE, FOND_MAJ_WEB_SEQUENCE_SEQ.NEXTVAL)",
         [
           coordonnees.nom,
